@@ -8,3 +8,5 @@
 [1002/191145.641:ERROR:settings.cc(325)] Settings version is not 1
 [1003/005221.468:ERROR:file_io.cc(90)] ReadExactly: expected 152, observed 40
 [1003/005330.670:ERROR:settings.cc(325)] Settings version is not 1
+[1003/024044.087:ERROR:file_io.cc(90)] ReadExactly: expected 152, observed 40
+[1003/024239.445:ERROR:settings.cc(325)] Settings version is not 1
