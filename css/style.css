@@ -1,0 +1,35 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f6f8fa;
+  margin: 0;
+  padding: 2em;
+}
+h1, h2 {
+  color: #222;
+}
+table {
+  border-collapse: collapse;
+  margin: 1em 0;
+  background: #fff;
+  width: 100%;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 0.5em 0.75em;
+  text-align: center;
+}
+th {
+  background: #eaeaea;
+}
+tr:nth-child(even) td {
+  background: #f2f2f2;
+}
+ul {
+  padding-left: 1.5em;
+}
+canvas {
+  max-width: 700px;
+  margin-bottom: 2em;
+  background: #fff;
+  border: 1px solid #eee;
+}
