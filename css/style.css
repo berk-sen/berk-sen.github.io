@@ -1,35 +1,47 @@
 body {
   font-family: Arial, sans-serif;
-  background: #f6f8fa;
-  margin: 0;
-  padding: 2em;
+  background: #f0f2f5;
+  color: #333;
+  margin: 20px;
 }
-h1, h2 {
-  color: #222;
-}
+
+h1, h2 { text-align: center; color: #2c3e50; }
+
 table {
-  border-collapse: collapse;
-  margin: 1em 0;
-  background: #fff;
   width: 100%;
-}
-th, td {
-  border: 1px solid #ddd;
-  padding: 0.5em 0.75em;
-  text-align: center;
-}
-th {
-  background: #eaeaea;
-}
-tr:nth-child(even) td {
-  background: #f2f2f2;
-}
-ul {
-  padding-left: 1.5em;
-}
-canvas {
-  max-width: 700px;
-  margin-bottom: 2em;
+  border-collapse: collapse;
+  margin: 20px 0;
   background: #fff;
-  border: 1px solid #eee;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
+
+th, td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+th { background-color: #3498db; color: white; }
+tr:nth-child(even) { background-color: #f9f9f9; }
+tr:hover { background-color: #f1f1f1; }
+
+ul#past-games {
+  list-style: none;
+  padding: 0;
+  max-width: 600px;
+  margin: 0 auto;
+}
+ul#past-games li {
+  background: #fff;
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+ul#past-games li:hover { transform: scale(1.02); }
+
+a { text-decoration: none; color: #2980b9; }
+a:hover { text-decoration: underline; }
+
+canvas { max-width: 800px; margin: 20px auto; display: block; }
