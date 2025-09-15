@@ -1,32 +1,41 @@
-async function loadLatestGame() {
+async function loadGames(){
   const files = await (await fetch("./data/games.json")).json();
-  if(files.length===0){document.getElementById("latest-game").innerHTML="<p>No games available.</p>"; return;}
+  const games = [];
 
-  const latest = await (await fetch("./data/"+files[files.length-1])).json();
-  const container = document.getElementById("latest-game");
-  let html = `<h2>Game on ${latest.date} (Pot Size: ${latest.potSize})</h2><table><thead><tr><th>Player</th>`;
-  const rounds = Object.values(latest.players)[0].length;
-  for(let i=1;i<=rounds;i++) html+=`<th>Round ${i}</th>`;
-  html+=`<th>Total Earning</th></tr></thead><tbody>`;
-
-  let bestPlayer=null,bestScore=-Infinity;
-  for(const [p,scores] of Object.entries(latest.players)){
-    const total = scores.reduce((a,b)=>a+b,0) - latest.potSize*rounds;
-    html+=`<tr><td>${p}</td>`+scores.map(s=>`<td>${s}</td>`).join('')+`<td>${total}</td></tr>`;
-    if(total>bestScore){bestScore=total; bestPlayer=p;}
+  // Her dosyayı yükle ve date ile birlikte diziye at
+  for(const f of files){
+    const g = await (await fetch("./data/"+f)).json();
+    games.push({file:f, ...g});
   }
-  html+=`</tbody></table><p><strong>Biggest Winner:</strong> ${bestPlayer} (+${bestScore})</p>`;
-  container.innerHTML=html;
 
-  const list = document.getElementById("past-games"); list.innerHTML="";
-  for(let i=files.length-2;i>=0;i--){
-    const g = await (await fetch("./data/"+files[i])).json();
-    let best=null,score=-Infinity;
-    const roundsCount = Object.values(g.players)[0].length;
-    for(const [p,scores] of Object.entries(g.players)){const t = scores.reduce((a,b)=>a+b,0)-roundsCount*g.potSize; if(t>score){score=t; best=p;}}
-    const li = document.createElement("li");
-    li.innerHTML=`<a href="game.html?file=${files[i]}">${g.date}</a> (Pot: ${g.potSize}) - Winner: ${best} (+${score})`;
+  // 📌 Tarihe göre sırala (JSON içindeki "date" alanı baz alınır)
+  // Not: Tarihlerin formatı "DD Ay YYYY" (örn: 14 Eylül 2025) ise string sıralama hatalı olabilir.
+  // Bu yüzden Date objesine çevirmek en sağlamı:
+  games.sort((a,b)=> new Date(a.date) - new Date(b.date));
+
+  // ✅ En yeni oyunu al
+  const latest = games[games.length-1];
+
+  // Ana sayfada listeyi göster
+  const list=document.getElementById("past-games");
+  games.forEach(g=>{
+    // Kazananı bul
+    const rounds = Object.values(g.players)[0].length;
+    let best=null, score=-Infinity;
+    for(const [p,scores] of Object.entries(g.players)){
+      const total=scores.reduce((a,b)=>a+b,0)-rounds*g.potSize;
+      if(total>score){score=total; best=p;}
+    }
+
+    const li=document.createElement("li");
+    li.innerHTML=`<a href="game.html?file=${g.file}">${g.date}</a> 
+      (Pot: ${g.potSize}) - Winner: ${best} (+${score})`;
     list.appendChild(li);
-  }
+  });
+
+  // En yeni oyunu ayrı göstermek istersen
+  document.getElementById("latest-game").innerHTML = 
+    `<strong>Latest Game:</strong> ${latest.date} - Winner: 🎉 ${Object.keys(latest.players)[0]}`;
 }
-loadLatestGame();
+
+loadGames();
