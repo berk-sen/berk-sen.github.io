@@ -1,1 +1,1 @@
-# berk-sen.github.io
+# bunu yazan tosun okuyana koysun
